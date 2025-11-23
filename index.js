@@ -48,7 +48,8 @@ const signupError = document.getElementById('signupError');
 const showSignupLink = document.getElementById('showSignupLink');
 const showLoginLink = document.getElementById('showLoginLink');
 const logoutBtn = document.getElementById('logoutBtn');
-const themeToggle = document.getElementById('themeToggle');
+// Theme toggle selector changed to class to support multiple buttons
+const themeToggles = document.querySelectorAll('.theme-toggle-btn');
 const userProfile = document.getElementById('userProfile');
 
 const feedContainer = document.getElementById('feed');
@@ -129,6 +130,14 @@ function updateStats() {
     if(statsDisplay) {
         statsDisplay.textContent = `${total} Posts • ${totalLikes} Likes`;
     }
+}
+
+function clearAuthForms() {
+    if(emailInput) emailInput.value = '';
+    if(passwordInput) passwordInput.value = '';
+    if(signupEmail) signupEmail.value = '';
+    if(signupUsername) signupUsername.value = '';
+    if(signupPassword) signupPassword.value = '';
 }
 
 // --- Core Logic ---
@@ -324,6 +333,7 @@ function handleAuth(e, type) {
 
         const user = state.users.find(u => u.email === email && u.password === password);
         if (user) {
+            clearAuthForms();
             authenticateUser(email);
         } else {
             if(loginError) loginError.classList.remove('hidden');
@@ -343,6 +353,7 @@ function handleAuth(e, type) {
         }
         state.users.push({ email, password, username, avatar: null });
         saveToStorage('sharpfeed_users', state.users);
+        clearAuthForms();
         authenticateUser(email);
     }
 }
@@ -383,12 +394,11 @@ function handleLogout() {
     state.editingId = null;
     localStorage.removeItem('sharpfeed_session');
     
+    clearAuthForms();
+
     if(appView) appView.classList.add('hidden');
     if(profileModal) profileModal.classList.add('hidden');
     if(loginView) loginView.classList.remove('hidden');
-    
-    if(emailInput) emailInput.value = '';
-    if(passwordInput) passwordInput.value = '';
 }
 
 // --- Profile Modal Logic ---
@@ -680,7 +690,9 @@ if (imagePreview) {
 if (clearImageBtn) clearImageBtn.addEventListener('click', (e) => { e.preventDefault(); clearImagePreview(); });
 
 if (postBtn) postBtn.addEventListener('click', handlePost);
-if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+// Support multiple theme toggle buttons
+if (themeToggles) themeToggles.forEach(btn => btn.addEventListener('click', toggleTheme));
+
 if (searchInput) searchInput.addEventListener('input', (e) => { state.filter = e.target.value; renderFeed(); });
 if (sortSelect) sortSelect.addEventListener('change', (e) => { state.sortBy = e.target.value; renderFeed(); });
 
