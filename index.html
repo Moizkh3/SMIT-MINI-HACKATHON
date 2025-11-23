@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MateBook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        lg: `var(--radius)`,
+                        md: `calc(var(--radius) - 2px)`,
+                        sm: `calc(var(--radius) - 4px)`,
+                    },
+                    colors: {
+                        border: "var(--border)",
+                        input: "var(--input)",
+                        ring: "var(--ring)",
+                        background: "var(--background)",
+                        foreground: "var(--foreground)",
+                        primary: {
+                            DEFAULT: "var(--primary)",
+                            foreground: "var(--primary-foreground)",
+                        },
+                        secondary: {
+                            DEFAULT: "var(--secondary)",
+                            foreground: "var(--secondary-foreground)",
+                        },
+                        destructive: {
+                            DEFAULT: "var(--destructive)",
+                            foreground: "var(--destructive-foreground)",
+                        },
+                        muted: {
+                            DEFAULT: "var(--muted)",
+                            foreground: "var(--muted-foreground)",
+                        },
+                        accent: {
+                            DEFAULT: "var(--accent)",
+                            foreground: "var(--accent-foreground)",
+                        },
+                        popover: {
+                            DEFAULT: "var(--popover)",
+                            foreground: "var(--popover-foreground)",
+                        },
+                        card: {
+                            DEFAULT: "var(--card)",
+                            foreground: "var(--card-foreground)",
+                        },
+                        sidebar: {
+                            DEFAULT: "var(--sidebar)",
+                            foreground: "var(--sidebar-foreground)",
+                            primary: "var(--sidebar-primary)",
+                            'primary-foreground': "var(--sidebar-primary-foreground)",
+                            accent: "var(--sidebar-accent)",
+                            'accent-foreground': "var(--sidebar-accent-foreground)",
+                            border: "var(--sidebar-border)",
+                            ring: "var(--sidebar-ring)",
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+        :root {
+            --background: rgb(255, 255, 255);
+            --foreground: rgb(2, 8, 23);
+            --card: rgb(250, 250, 250);
+            --card-foreground: rgb(2, 8, 23);
+            --popover: rgb(247, 247, 247);
+            --popover-foreground: rgb(2, 8, 23);
+            --primary: rgb(31, 173, 102);
+            --primary-foreground: rgb(248, 250, 252);
+            --secondary: rgb(242, 242, 242);
+            --secondary-foreground: rgb(2, 8, 23);
+            --muted: rgb(237, 237, 237);
+            --muted-foreground: rgb(100, 116, 139);
+            --accent: rgb(230, 230, 230);
+            --accent-foreground: rgb(2, 8, 23);
+            --destructive: rgb(239, 68, 68);
+            --destructive-foreground: rgb(248, 250, 252);
+            --border: rgb(217, 217, 217);
+            --input: rgb(230, 230, 230);
+            --ring: rgb(31, 173, 102);
+            --chart-1: rgb(34, 195, 192);
+            --chart-2: rgb(251, 115, 81);
+            --chart-3: rgb(38, 128, 217);
+            --chart-4: rgb(244, 192, 37);
+            --chart-5: rgb(140, 60, 221);
+            --sidebar: rgb(252, 252, 252);
+            --sidebar-foreground: rgb(2, 8, 23);
+            --sidebar-primary: rgb(27, 152, 89);
+            --sidebar-primary-foreground: rgb(248, 250, 252);
+            --sidebar-accent: rgb(240, 240, 240);
+            --sidebar-accent-foreground: rgb(2, 8, 23);
+            --sidebar-border: rgb(73, 75, 80);
+            --sidebar-ring: rgb(27, 152, 89);
+            --radius: 0.3rem;
+            --shadow-sm: 0rem 0.1rem 0.25rem 0rem hsl(0 0% 0% / 0.03), 0rem 1px 2px -1px hsl(0 0% 0% / 0.03);
+            --shadow: 0rem 0.1rem 0.25rem 0rem hsl(0 0% 0% / 0.03), 0rem 1px 2px -1px hsl(0 0% 0% / 0.03);
+            --shadow-md: 0rem 0.1rem 0.25rem 0rem hsl(0 0% 0% / 0.03), 0rem 2px 4px -1px hsl(0 0% 0% / 0.03);
+            --shadow-lg: 0rem 0.1rem 0.25rem 0rem hsl(0 0% 0% / 0.03), 0rem 4px 6px -1px hsl(0 0% 0% / 0.03);
+            --shadow-xl: 0rem 0.1rem 0.25rem 0rem hsl(0 0% 0% / 0.03), 0rem 8px 10px -1px hsl(0 0% 0% / 0.03);
+            --shadow-2xl: 0rem 0.1rem 0.25rem 0rem hsl(0 0% 0% / 0.07);
+        }
+
+        .dark {
+            --background: rgb(36, 38, 40);
+            --foreground: rgb(227, 230, 232);
+            --card: rgb(44, 45, 48);
+            --card-foreground: rgb(227, 230, 232);
+            --popover: rgb(48, 50, 54);
+            --popover-foreground: rgb(227, 230, 232);
+            --primary: rgb(31, 173, 102);
+            --primary-foreground: rgb(249, 250, 250);
+            --secondary: rgb(61, 63, 67);
+            --secondary-foreground: rgb(199, 204, 209);
+            --muted: rgb(53, 55, 59);
+            --muted-foreground: rgb(121, 126, 134);
+            --accent: rgb(68, 70, 75);
+            --accent-foreground: rgb(199, 204, 209);
+            --destructive: rgb(204, 51, 51);
+            --destructive-foreground: rgb(249, 250, 250);
+            --border: rgb(85, 88, 94);
+            --input: rgb(68, 70, 75);
+            --ring: rgb(31, 173, 102);
+            --chart-1: rgb(41, 163, 143);
+            --chart-2: rgb(232, 79, 48);
+            --chart-3: rgb(46, 138, 184);
+            --chart-4: rgb(217, 157, 38);
+            --chart-5: rgb(102, 51, 204);
+            --sidebar: rgb(31, 33, 35);
+            --sidebar-foreground: rgb(227, 230, 232);
+            --sidebar-primary: rgb(27, 152, 89);
+            --sidebar-primary-foreground: rgb(249, 250, 250);
+            --sidebar-accent: rgb(48, 50, 54);
+            --sidebar-accent-foreground: rgb(199, 204, 209);
+            --sidebar-border: rgb(73, 75, 80);
+            --sidebar-ring: rgb(27, 152, 89);
+            --shadow-sm: 0rem 0.2rem 0.5rem 0rem hsl(0 0% 0% / 0.10), 0rem 1px 2px -1px hsl(0 0% 0% / 0.10);
+            --shadow: 0rem 0.2rem 0.5rem 0rem hsl(0 0% 0% / 0.10), 0rem 1px 2px -1px hsl(0 0% 0% / 0.10);
+            --shadow-md: 0rem 0.2rem 0.5rem 0rem hsl(0 0% 0% / 0.10), 0rem 2px 4px -1px hsl(0 0% 0% / 0.10);
+            --shadow-lg: 0rem 0.2rem 0.5rem 0rem hsl(0 0% 0% / 0.10), 0rem 4px 6px -1px hsl(0 0% 0% / 0.10);
+            --shadow-xl: 0rem 0.2rem 0.5rem 0rem hsl(0 0% 0% / 0.10), 0rem 8px 10px -1px hsl(0 0% 0% / 0.10);
+            --shadow-2xl: 0rem 0.2rem 0.5rem 0rem hsl(0 0% 0% / 0.25);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Component Utils */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            line-height: 1.25rem;
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+        }
+        .btn:focus-visible {
+            outline: 2px solid var(--ring);
+            outline-offset: 2px;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .input-field {
+            display: flex;
+            height: 2.5rem;
+            width: 100%;
+            border-radius: var(--radius);
+            border-width: 1px;
+            border-color: var(--input);
+            background-color: transparent;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: var(--foreground);
+            transition: all 0.2s;
+        }
+        .input-field::placeholder {
+            color: var(--muted-foreground);
+        }
+        .input-field:focus-visible {
+            outline: none;
+            border-color: var(--ring);
+            box-shadow: 0 0 0 1px var(--ring);
+        }
+
+        /* Custom Scrollbar */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .hidden { display: none !important; }
+
+        .like-anim { animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground transition-colors duration-300">
+
+    <!-- Login View -->
+    <div id="login-view" class="min-h-screen flex items-center justify-center p-4">
+        <form id="loginForm" class="w-full max-w-sm bg-card border border-border text-card-foreground shadow-lg rounded-lg p-8 space-y-6 animate-fade-in">
+            <div class="flex flex-col items-center space-y-2 text-center">
+                <div class="h-10 w-10 rounded flex items-center justify-center bg-primary/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8 text-primary">
+                        <rect x="4" y="4" width="16" height="11" rx="2" ry="2" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 8h8" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 11h5" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 15.5c0 1.5 1.5 2.5 3 2.5h2l1.5-3" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 15.5c0 1.5-1.5 2.5-3 2.5h-2l-1.5-3" />
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold tracking-tight">Welcome back</h1>
+                <p class="text-sm text-muted-foreground">Enter your credentials to sign in</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Email</label>
+                    <input type="email" id="emailInput" required class="input-field">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Password</label>
+                    <input type="password" id="passwordInput" required class="input-field">
+                </div>
+            </div>
+
+            <div id="loginError" class="text-sm text-destructive font-medium text-center hidden p-2 bg-destructive/10 rounded-md">
+                Invalid email or password
+            </div>
+
+            <button type="submit" class="btn w-full bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 shadow-sm">
+                Sign In
+            </button>
+
+            <div class="text-center text-sm text-muted-foreground">
+                Don't have an account? 
+                <a href="#" id="showSignupLink" class="underline underline-offset-4 hover:text-primary font-medium">Sign up</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Signup View -->
+    <div id="signup-view" class="hidden min-h-screen flex items-center justify-center p-4">
+        <form id="signupForm" class="w-full max-w-sm bg-card border border-border text-card-foreground shadow-lg rounded-lg p-8 space-y-6 animate-fade-in">
+            <div class="flex flex-col items-center space-y-2 text-center">
+                <h1 class="text-2xl font-bold tracking-tight">Create an account</h1>
+                <p class="text-sm text-muted-foreground">Enter your information to get started</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <label class="text-sm font-medium leading-none">Username</label>
+                    <input type="text" id="signupUsername" required class="input-field">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-medium leading-none">Email</label>
+                    <input type="email" id="signupEmail" required class="input-field">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-medium leading-none">Password</label>
+                    <input type="password" id="signupPassword" required class="input-field">
+                </div>
+            </div>
+
+            <div id="signupError" class="text-sm text-destructive font-medium text-center hidden p-2 bg-destructive/10 rounded-md">
+                User already exists
+            </div>
+
+            <button type="submit" class="btn w-full bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 shadow-sm">
+                Create Account
+            </button>
+
+            <div class="text-center text-sm text-muted-foreground">
+                Already have an account? 
+                <a href="#" id="showLoginLink" class="underline underline-offset-4 hover:text-primary font-medium">Sign in</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Main Layout -->
+    <div id="app-view" class="hidden w-full min-h-screen flex flex-col pb-10">
+        
+        <!-- Navbar -->
+        <header class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div class="max-w-3xl mx-auto flex h-14 items-center justify-between px-4">
+                <div class="flex items-center gap-2">
+                    <div class="h-8 w-8 rounded bg-primary flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-primary-foreground">
+                            <rect x="4" y="4" width="16" height="11" rx="2" ry="2" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 8h8" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 11h5" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15.5c0 1.5 1.5 2.5 3 2.5h2l1.5-3" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 15.5c0 1.5-1.5 2.5-3 2.5h-2l-1.5-3" />
+                        </svg>
+                    </div>
+                    <span class="font-bold text-lg tracking-tight">MateBook</span>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="relative hidden sm:block">
+                        <input type="text" id="searchInput" placeholder="Search posts..." class="input-field h-9 w-64 pr-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="absolute right-2.5 top-2.5 h-4 w-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+
+                    <button id="themeToggle" class="btn h-9 w-9 p-0 hover:bg-accent hover:text-accent-foreground rounded-full" aria-label="Toggle theme">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+                        </svg>
+                    </button>
+
+                    <div class="flex items-center gap-3 border-l border-border pl-4">
+                        <div id="userProfile" class="h-8 w-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center text-xs font-bold ring-2 ring-background cursor-pointer hover:opacity-80 transition-opacity overflow-hidden select-none">
+                            U
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 max-w-2xl w-full mx-auto px-4 py-6 space-y-6">
+            
+            <!-- Controls -->
+            <div class="flex justify-end">
+                <div class="relative">
+                    <select id="sortSelect" class="h-9 w-[180px] rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
+                        <option value="latest" class="bg-background text-foreground">Latest First</option>
+                        <option value="oldest" class="bg-background text-foreground">Oldest First</option>
+                        <option value="mostLiked" class="bg-background text-foreground">Most Popular</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Create Post -->
+            <div class="rounded-lg border border-border bg-card text-card-foreground shadow-sm animate-slide-up">
+                <div class="p-6 space-y-4">
+                    <textarea id="postText" rows="3" placeholder="What's on your mind?" 
+                        class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"></textarea>
+                    
+                    <!-- Image Preview -->
+                    <div id="imagePreviewContainer" class="hidden relative rounded-md overflow-hidden border border-border bg-muted">
+                        <img id="imagePreview" src="" class="w-full max-h-[300px] object-cover">
+                        <button id="clearImageBtn" class="absolute top-2 right-2 h-6 w-6 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition-colors" aria-label="Remove image">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2">
+                        <div class="flex items-center gap-2">
+                            <label class="btn h-9 w-9 p-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-md cursor-pointer" title="Upload Image">
+                                <input type="file" id="imageUpload" accept="image/*" class="hidden">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                </svg>
+                            </label>
+                            <input type="text" id="imageUrl" placeholder="Image URL" class="input-field h-9 text-xs w-48">
+                        </div>
+                        <button id="postBtn" class="btn bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4">
+                            Post
+                        </button>
+                    </div>
+                    
+                    <!-- Emojis -->
+                    <div id="emojiContainer" class="flex gap-1 overflow-x-auto scrollbar-hide pt-2 border-t border-border"></div>
+                </div>
+            </div>
+
+            <div id="statsDisplay" class="text-xs text-muted-foreground text-right font-medium">
+                Loading updates...
+            </div>
+
+            <!-- Feed -->
+            <div id="feed" class="space-y-6 pb-8"></div>
+
+        </main>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+        <div class="w-full max-w-md bg-card border border-border text-card-foreground shadow-lg rounded-lg overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-6 pb-0">
+                <h2 class="text-xl font-bold tracking-tight">Edit Profile</h2>
+                <p class="text-sm text-muted-foreground mt-1">Update your profile information</p>
+            </div>
+            
+            <div class="p-6 space-y-6 overflow-y-auto">
+                <!-- Avatar Section -->
+                <div class="flex flex-col items-center gap-4">
+                    <div class="relative h-24 w-24 rounded-full ring-2 ring-border overflow-hidden bg-secondary flex items-center justify-center group">
+                        <img id="profileAvatarPreview" src="" class="h-full w-full object-cover hidden">
+                        <span id="profileAvatarInitial" class="text-3xl font-bold text-secondary-foreground">U</span>
+                        
+                        <!-- Overlay for upload -->
+                        <label class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <input type="file" id="profileAvatarFile" accept="image/*" class="hidden">
+                        </label>
+                    </div>
+                    <div class="w-full">
+                         <label class="text-xs font-medium text-muted-foreground mb-1 block">Or image URL</label>
+                         <input type="text" id="profileAvatarUrl" placeholder="https://example.com/avatar.jpg" class="input-field text-sm">
+                    </div>
+                </div>
+
+                <!-- Username Section -->
+                <div class="space-y-2">
+                    <label class="text-sm font-medium leading-none">Username</label>
+                    <input type="text" id="profileUsernameInput" class="input-field">
+                </div>
+            </div>
+
+            <div class="p-6 pt-0 flex items-center justify-between">
+                <button id="logoutBtn" class="btn bg-destructive/10 text-destructive hover:bg-destructive/20 h-9 px-4 text-sm">Logout</button>
+                <div class="flex gap-2">
+                    <button id="cancelProfileBtn" class="btn bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 px-4">Cancel</button>
+                    <button id="saveProfileBtn" class="btn bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./index.js"></script>
+</body>
+</html>
